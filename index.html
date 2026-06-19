@@ -637,9 +637,45 @@
   }
 
   .mermaid-wrap {
-    padding: 20px;
+    padding: 28px 20px;
     overflow-x: auto;
-    background: var(--surface);
+    background:
+      radial-gradient(circle at 1px 1px, rgba(52,208,88,0.16) 1px, transparent 1px) 0 0/22px 22px,
+      var(--surface);
+    display: flex;
+    justify-content: center;
+    cursor: zoom-in;
+    position: relative;
+  }
+
+  .mermaid-wrap::after {
+    content: "⤢";
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .mermaid-wrap:hover::after { opacity: 0.7; }
+
+  .mermaid-wrap::-webkit-scrollbar { height: 8px; }
+  .mermaid-wrap::-webkit-scrollbar-track { background: transparent; }
+  .mermaid-wrap::-webkit-scrollbar-thumb {
+    background: rgba(52,208,88,0.25);
+    border-radius: 8px;
+  }
+
+  .mermaid-wrap svg {
+    filter: drop-shadow(0 0 6px rgba(52,208,88,0.12));
+  }
+
+  .mermaid-wrap svg .node rect,
+  .mermaid-wrap svg .node polygon,
+  .mermaid-wrap svg .node circle {
+    filter: drop-shadow(0 0 4px rgba(52,208,88,0.25));
   }
 
   .diagram-quote {
@@ -648,9 +684,67 @@
     color: var(--muted);
     font-size: 0.82rem;
   }
+
+  /* ── DIAGRAM ZOOM MODAL ── */
+  .diagram-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(4,8,5,0.88);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    animation: fadeIn 0.2s ease both;
+    backdrop-filter: blur(3px);
+  }
+
+  .diagram-modal.open { display: flex; }
+
+  .diagram-modal-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow: auto;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(52,208,88,0.08);
+  }
+
+  .diagram-modal-inner svg {
+    filter: drop-shadow(0 0 8px rgba(52,208,88,0.18));
+    max-width: none !important;
+  }
+
+  .diagram-modal-close {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .diagram-modal-close:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 </style>
 </head>
 <body>
+
+<!-- DIAGRAM ZOOM MODAL -->
+<div class="diagram-modal" id="diagramModal" onclick="if(event.target===this) closeDiagramModal()">
+  <button class="diagram-modal-close" onclick="closeDiagramModal()">✕</button>
+  <div class="diagram-modal-inner" id="diagramModalInner"></div>
+</div>
 
 <!-- HEADER -->
 <header>
@@ -2241,8 +2335,30 @@ flowchart TB
   function renderDiagrams() {
     if (diagramsRendered) return;
     diagramsRendered = true;
-    mermaid.run({ querySelector: '#section-diagramas .mermaid' });
+    mermaid.run({ querySelector: '#section-diagramas .mermaid' }).then(setupDiagramZoom);
   }
+
+  // ── DIAGRAM ZOOM MODAL ──
+  function setupDiagramZoom() {
+    document.querySelectorAll('#section-diagramas .mermaid-wrap').forEach(wrap => {
+      wrap.addEventListener('click', () => {
+        const svg = wrap.querySelector('svg');
+        if (!svg) return;
+        const modalInner = document.getElementById('diagramModalInner');
+        modalInner.innerHTML = '';
+        modalInner.appendChild(svg.cloneNode(true));
+        document.getElementById('diagramModal').classList.add('open');
+      });
+    });
+  }
+
+  function closeDiagramModal() {
+    document.getElementById('diagramModal').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeDiagramModal();
+  });
 
   // ── SIDEBAR NAV ──
   function buildNav(day) {
@@ -2357,7 +2473,8 @@ flowchart TB
       clusterBkg: '#121f17',
       clusterBorder: '#1f3a28',
       textColor: '#e9f5ec',
-      fontSize: '14px'
+      fontSize: '14px',
+      fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif"
     }
   });
 </script>

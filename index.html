@@ -2485,17 +2485,25 @@ flowchart TB
   // Each diagram is rendered independently so a failure in one
   // (e.g. on a memory-constrained mobile browser) never blocks the rest.
   let diagramsRenderPromise = null;
+  async function renderDiagramsSequentially() {
+    // Mermaid keeps shared internal state across calls, so rendering
+    // multiple diagrams concurrently corrupts their layouts (overlapping
+    // SVGs, empty containers). Render one at a time, in order.
+    const nodes = Array.from(document.querySelectorAll('#section-diagramas .mermaid'));
+    for (const node of nodes) {
+      try {
+        await mermaid.run({ nodes: [node] });
+      } catch (err) {
+        console.error('Mermaid render failed:', err);
+        node.outerHTML = '<div class="diagram-error">⚠️ No se pudo cargar este diagrama en este dispositivo.</div>';
+      }
+    }
+    setupDiagramZoom();
+  }
+
   function renderDiagrams() {
     if (!diagramsRenderPromise) {
-      const nodes = Array.from(document.querySelectorAll('#section-diagramas .mermaid'));
-      diagramsRenderPromise = Promise.allSettled(
-        nodes.map(node =>
-          mermaid.run({ nodes: [node] }).catch(err => {
-            console.error('Mermaid render failed:', err);
-            node.outerHTML = '<div class="diagram-error">⚠️ No se pudo cargar este diagrama en este dispositivo.</div>';
-          })
-        )
-      ).then(setupDiagramZoom);
+      diagramsRenderPromise = renderDiagramsSequentially();
     }
     return diagramsRenderPromise;
   }

@@ -1,0 +1,2295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notas del Evento — Sinergéticos</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a28;
+    --card-hover: #20203a;
+    --border: #2a2a45;
+    --accent: #7c5cfc;
+    --accent2: #c879ff;
+    --accent3: #38d9f5;
+    --gold: #f0c04a;
+    --text: #e8e8f0;
+    --muted: #8888aa;
+    --quote-bg: #1e1a3a;
+    --tag-day1: #2a4a7a;
+    --tag-day2: #2a5a4a;
+    --tag-day3: #4a2a5a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0d0b1e 0%, #1a0d33 50%, #0d1a2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .logo-area h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-area p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    max-width: 420px;
+    position: relative;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 9px 16px 9px 40px;
+    color: var(--text);
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .search-wrap input:focus {
+    border-color: var(--accent);
+    background: rgba(124,92,252,0.08);
+  }
+
+  .search-wrap input::placeholder { color: var(--muted); }
+
+  .search-icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .stats {
+    display: flex;
+    gap: 16px;
+    margin-left: auto;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-n {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--accent3), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-l {
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── TABS ── */
+  .tabs-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+    max-width: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs-bar::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    padding: 14px 22px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+    position: relative;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .tab-btn .badge {
+    background: var(--accent);
+    color: #fff;
+    border-radius: 20px;
+    font-size: 0.65rem;
+    padding: 1px 6px;
+    margin-left: 6px;
+    font-weight: 600;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 28px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .sidebar-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding: 0 4px;
+  }
+
+  .speaker-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nav-item {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-item:hover {
+    background: var(--card);
+    color: var(--text);
+  }
+
+  .nav-item.active {
+    background: rgba(124,92,252,0.15);
+    color: var(--accent);
+  }
+
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .nav-item.active .nav-dot { background: var(--accent); }
+
+  /* ── CONTENT ── */
+  .content { min-width: 0; }
+
+  .day-section { display: none; }
+  .day-section.visible { display: block; }
+
+  .day-header {
+    margin-bottom: 28px;
+  }
+
+  .day-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+
+  .day-tag.d1 { background: var(--tag-day1); color: #7ab3ff; }
+  .day-tag.d2 { background: var(--tag-day2); color: #7affcc; }
+  .day-tag.d3 { background: var(--tag-day3); color: #e07aff; }
+
+  .day-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .day-header p {
+    color: var(--muted);
+    font-size: 0.875rem;
+    margin-top: 4px;
+  }
+
+  /* ── SPEAKER CARD ── */
+  .speaker-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    scroll-margin-top: 110px;
+  }
+
+  .speaker-card:hover {
+    border-color: rgba(124,92,252,0.4);
+    box-shadow: 0 4px 30px rgba(124,92,252,0.08);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+  }
+
+  .card-meta { flex: 1; min-width: 0; }
+
+  .card-meta h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .card-meta .topic {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-toggle {
+    color: var(--muted);
+    font-size: 0.85rem;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .speaker-card.open .card-toggle { transform: rotate(180deg); }
+
+  .card-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  .speaker-card.open .card-body { display: block; }
+
+  /* ── NOTE CONTENT ── */
+  .note-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .note-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 0.875rem;
+    color: #c8c8e0;
+    padding: 4px 0;
+  }
+
+  .note-list li::before {
+    content: "›";
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0px;
+  }
+
+  .note-list li.sub {
+    padding-left: 24px;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .note-list li.sub::before { content: "–"; color: var(--muted); }
+
+  .note-list li.numbered {
+    counter-increment: note-counter;
+  }
+
+  .note-list li.numbered::before {
+    content: counter(note-counter) ".";
+    color: var(--accent2);
+    font-size: 0.78rem;
+    font-weight: 700;
+    min-width: 18px;
+  }
+
+  .quote {
+    background: var(--quote-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-style: italic;
+    color: var(--text);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .quote strong { color: var(--gold); font-style: normal; }
+
+  .section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent3);
+    margin: 16px 0 8px;
+    font-weight: 600;
+  }
+
+  .pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0;
+  }
+
+  .pill {
+    background: rgba(124,92,252,0.12);
+    border: 1px solid rgba(124,92,252,0.25);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .pill.green {
+    background: rgba(56,217,245,0.08);
+    border-color: rgba(56,217,245,0.2);
+    color: var(--accent3);
+  }
+
+  .pill.gold {
+    background: rgba(240,192,74,0.1);
+    border-color: rgba(240,192,74,0.25);
+    color: var(--gold);
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(124,92,252,0.1), rgba(200,121,255,0.06));
+    border: 1px solid rgba(124,92,252,0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 12px 0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #d4c8ff;
+  }
+
+  /* ── SEARCH RESULTS ── */
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+
+  .no-results svg { margin-bottom: 12px; opacity: 0.4; }
+
+  .highlight { background: rgba(240,192,74,0.3); border-radius: 3px; padding: 0 2px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .main { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 12px 16px; }
+    .stats { display: none; }
+    .main { padding: 20px 16px; }
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .speaker-card {
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* stagger */
+  .speaker-card:nth-child(1) { animation-delay: 0.05s; }
+  .speaker-card:nth-child(2) { animation-delay: 0.10s; }
+  .speaker-card:nth-child(3) { animation-delay: 0.15s; }
+  .speaker-card:nth-child(4) { animation-delay: 0.20s; }
+  .speaker-card:nth-child(5) { animation-delay: 0.25s; }
+  .speaker-card:nth-child(6) { animation-delay: 0.30s; }
+
+  /* search active */
+  .searching .speaker-card { animation: none; }
+  .hidden { display: none !important; }
+
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 10px 0;
+  }
+
+  .formula-item {
+    background: rgba(56,217,245,0.07);
+    border: 1px solid rgba(56,217,245,0.15);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .formula-item .letter {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent3);
+    display: block;
+  }
+
+  .steps-list {
+    counter-reset: step-counter;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0;
+  }
+
+  .step {
+    counter-increment: step-counter;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    color: #c8c8e0;
+  }
+
+  .step::before {
+    content: counter(step-counter);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── DIAGRAMS ── */
+  .diagram-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    scroll-margin-top: 110px;
+  }
+
+  .diagram-card .head {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .diagram-card .head h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .diagram-card .head .src {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .mermaid-wrap {
+    padding: 20px;
+    overflow-x: auto;
+    background: var(--surface);
+  }
+
+  .diagram-quote {
+    padding: 10px 24px 16px;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <h1>⚡ Sinergéticos</h1>
+      <p>Notas del evento presencial · 30 speakers</p>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Buscar en notas, speakers, ideas…" />
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n">30</div><div class="stat-l">Speakers</div></div>
+      <div class="stat"><div class="stat-n">3</div><div class="stat-l">Días</div></div>
+      <div class="stat"><div class="stat-n">5</div><div class="stat-l">Pilares</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="showDay('d1', this)">
+    Día 1 <span class="badge">10</span>
+  </button>
+  <button class="tab-btn" onclick="showDay('d2', this)">
+    Día 2 <span class="badge">9</span>
+  </button>
+  <button class="tab-btn" onclick="showDay('d3', this)">
+    Domingo <span class="badge">11</span>
+  </button>
+  <button class="tab-btn" onclick="showDay('diagramas', this)">
+    📊 Diagramas
+  </button>
+  <button class="tab-btn" onclick="showDay('all', this)">
+    Ver todo
+  </button>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="mainGrid">
+
+  <!-- SIDEBAR NAV -->
+  <aside class="sidebar" id="sidebarNav">
+    <div class="sidebar-title">Speakers</div>
+    <div class="speaker-nav" id="speakerNav"></div>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content" id="contentArea">
+
+    <!-- ════════════ DÍA 1 ════════════ -->
+    <div class="day-section visible" id="section-d1">
+      <div class="day-header">
+        <span class="day-tag d1">Día 1</span>
+        <h2>Ecosistemas · Mentalidad · Productividad</h2>
+        <p>Inauguración del evento con 10 ponentes clave</p>
+      </div>
+
+      <!-- Jorge Serratos 1 -->
+      <div class="speaker-card open" id="card-jorge1" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar">JS</div>
+          <div class="card-meta">
+            <h3>Jorge Serratos</h3>
+            <div class="topic">Apertura · Ecosistemas · Capital Social</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">Ideas clave</div>
+          <ul class="note-list">
+            <li>Logística para traer 30 speakers de categoría internacional</li>
+            <li>Este fin de semana se trabajarán 5 pilares</li>
+          </ul>
+          <div class="section-title">Los 5 pilares</div>
+          <div class="pill-list">
+            <span class="pill">Inspiración</span>
+            <span class="pill">Repetición</span>
+            <span class="pill">Constancia</span>
+            <span class="pill">Recomendaciones</span>
+            <span class="pill">Acción</span>
+          </div>
+          <div class="quote">
+            <strong>"Trazar el camino es fácil, ejecutar el camino es lo difícil."</strong>
+          </div>
+          <ul class="note-list">
+            <li>El aprendizaje más importante: lo que empiezas, lo terminas</li>
+            <li>Disfruta el éxito de los demás mientras tu éxito llega — filosofía Sinergéticos</li>
+            <li>Accionar lo que estás aprendiendo</li>
+            <li><strong>En el lugar correcto tu valor se multiplica</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Susy Bereken -->
+      <div class="speaker-card" id="card-susy" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#c879ff,#7c5cfc)">SB</div>
+          <div class="card-meta">
+            <h3>Susy Bereken</h3>
+            <div class="topic">Entorno · Liderazgo · Influencia</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">Entorno = Resultado</div>
+          <ul class="note-list">
+            <li>Accionar y poner en práctica todo lo que estás aprendiendo</li>
+            <li>En el lugar correcto tu valor se multiplica</li>
+            <li>¿Cuál es el entorno en donde estás viviendo?</li>
+            <li>Las personas donde la tierra es fértil crecen</li>
+            <li>No puedes construir una vida grande alimentándote de conversaciones pequeñas</li>
+          </ul>
+          <div class="quote">
+            <strong>"Muchos quieren una nueva mentalidad sin cambiar de entorno."</strong>
+          </div>
+          <div class="section-title">Preguntas de reflexión</div>
+          <ul class="note-list">
+            <li>¿Qué personas te están acercando a tu éxito?</li>
+            <li>¿Quién me está influenciando?</li>
+            <li>¿Qué conversaciones está permitiendo mi mentalidad?</li>
+            <li>¿Cuándo fue la última vez que viviste una experiencia que elevó tus estándares?</li>
+          </ul>
+          <div class="section-title">Los 3 tipos de personas en tu entorno</div>
+          <ul class="note-list">
+            <li class="numbered">Nos drenan (quejas, críticas, drama)</li>
+            <li class="numbered">Nos mantienen igual (comodidad)</li>
+            <li class="numbered">Nos expanden — te recuerdan tu propósito</li>
+          </ul>
+          <div class="section-title">Fórmula</div>
+          <div class="formula-grid">
+            <div class="formula-item"><span class="letter">P</span>Personas</div>
+            <div class="formula-item"><span class="letter">E</span>Experiencias</div>
+            <div class="formula-item"><span class="letter">R</span>Recursos</div>
+          </div>
+          <div class="highlight-box">🔑 No necesitas que todos entiendan tu valor</div>
+        </div>
+      </div>
+
+      <!-- Pavo Gómez -->
+      <div class="speaker-card" id="card-pavo" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#38d9f5,#2a8fa8)">PG</div>
+          <div class="card-meta">
+            <h3>Pavo Gómez</h3>
+            <div class="topic">Superproductividad · Hábitos · Enfoque</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">Base mental</div>
+          <ul class="note-list">
+            <li>La buena suerte no existe; tú construyes tu propia suerte</li>
+            <li>¿Sentirse bien para ser productivo o ser productivo para sentirse bien?</li>
+            <li>Jugar es la clave para la verdadera productividad</li>
+            <li>La claridad es fuerza — nadie le puede pegar a lo que no ve</li>
+          </ul>
+          <div class="quote"><strong>Pensamientos → Emociones → Acciones → Hábitos → Resultados</strong></div>
+          <div class="section-title">Cómo dejar de procrastinar</div>
+          <div class="steps-list">
+            <div class="step">Partir el pan: grandes metas → pequeñas batallas diarias</div>
+            <div class="step">Eliminar distracciones</div>
+            <div class="step">Método SS — no le des permiso a tu mente de sabotearte</div>
+          </div>
+          <div class="section-title">Proteger el descanso (8 principios)</div>
+          <ul class="note-list">
+            <li>Establece un horario fijo</li>
+            <li>Deja el celular fuera de tu alcance</li>
+            <li>Enfría tu habitación</li>
+            <li>Disminuye la exposición a la luz</li>
+            <li>Reflexiona y escribe</li>
+            <li>Identifica el estrés</li>
+          </ul>
+          <div class="section-title">Cómo hacer un nuevo hábito</div>
+          <div class="pill-list">
+            <span class="pill">Señal</span>
+            <span class="pill">Rutina</span>
+            <span class="pill">Premio</span>
+          </div>
+          <ul class="note-list">
+            <li>Hacerlo obvio</li>
+            <li>Hacerlo satisfactorio</li>
+            <li>Hacerlo sencillo</li>
+            <li><strong>La frecuencia es más importante que la calidad en hábitos</strong></li>
+          </ul>
+          <div class="section-title">Método Pomodoro</div>
+          <ul class="note-list">
+            <li>Determina un espacio de trabajo</li>
+            <li>Haz una tarea específica por 25 min</li>
+            <li>5 min de descanso entre cada bloque</li>
+            <li>Después de 3 bloques → 30 min de descanso</li>
+          </ul>
+          <div class="section-title">Efecto Batman</div>
+          <ul class="note-list">
+            <li>Crea un personaje para lograr tus objetivos</li>
+            <li>¿Cuál es la identidad que necesitas hoy para convertirte en lo que quieres mañana?</li>
+          </ul>
+          <div class="section-title">10 acciones urgentes para recuperar tu mente</div>
+          <ul class="note-list">
+            <li>Elimina notificaciones</li>
+            <li>Duerme con el cel fuera de tu alcance</li>
+            <li>Sácalo de tu vista mientras trabajas</li>
+            <li>Sal de grupos de WhatsApp innecesarios</li>
+            <li>Quita los globos rojos de las apps</li>
+            <li>Date de baja de mailings</li>
+            <li>Ponte obstáculos en las redes</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Manuel de León 1 -->
+      <div class="speaker-card" id="card-manuel1" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#f0c04a,#e08030)">ML</div>
+          <div class="card-meta">
+            <h3>Manuel de León</h3>
+            <div class="topic">Una vida legendaria con IA · Prompts · Hacks</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="highlight-box">💡 La IA no viene a reemplazar personas — viene a reemplazar sus límites</div>
+          <div class="section-title">4 elementos de un buen prompt</div>
+          <div class="steps-list">
+            <div class="step">Objetivo</div>
+            <div class="step">¿Cómo quiero que lo haga?</div>
+            <div class="step">Cómo quiero que me entregues la información</div>
+            <div class="step">Contexto</div>
+          </div>
+          <div class="section-title">Hacks de Salud con IA</div>
+          <ul class="note-list">
+            <li>Mídete siempre con IA — analiza la información que te da</li>
+            <li>Solo aplicaciones oficiales de salud</li>
+            <li>Predice tus enfermedades</li>
+          </ul>
+          <div class="section-title">Hacks de Mente</div>
+          <ul class="note-list">
+            <li>Crea una red neuronal — <strong>Obsidian</strong> como segundo cerebro</li>
+            <li>Haz que la IA investigue diariamente en lo que te vas a enfocar</li>
+            <li>Investiga como los pros con Deep Research / NotebookLM</li>
+          </ul>
+          <div class="section-title">Hacks de Profesión</div>
+          <ul class="note-list">
+            <li>Deja de usar IA en el navegador → usa <strong>Visual Studio Code</strong></li>
+            <li>Crea empleados con IA</li>
+            <li>Crea la primera aplicación de tu negocio — <strong>Lovable</strong></li>
+          </ul>
+          <div class="section-title">Hacks de Espíritu</div>
+          <ul class="note-list">
+            <li>Crea un journal con IA (Claude)</li>
+            <li>Conecta contigo — <strong>Hallow</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Ricardo Perret -->
+      <div class="speaker-card" id="card-ricardo" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#ff6b9d,#c0392b)">RP</div>
+          <div class="card-meta">
+            <h3>Ricardo Perret</h3>
+            <div class="topic">Recupera tu poder · Inconsciente · Creencias</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">¿Cómo perdemos nuestro poder?</div>
+          <div class="pill-list">
+            <span class="pill">Nos lo roban</span>
+            <span class="pill">Lo entregamos</span>
+            <span class="pill">Se nos drena</span>
+          </div>
+          <div class="section-title">El camino de regreso</div>
+          <ul class="note-list">
+            <li>Somos cocreadores de nuestra realidad</li>
+            <li>Recupera tu honestidad</li>
+            <li>La máscara es lo que te pones para ser aceptado — deja de usarla</li>
+            <li>Vuélve a ser quien eres — reconéctate a tu esencia</li>
+            <li>Cada parte de tu cuerpo tiene mensajes para darte</li>
+          </ul>
+          <div class="section-title">Las 4 creencias limitantes</div>
+          <div class="steps-list">
+            <div class="step">No puedes</div>
+            <div class="step">No eres aceptado</div>
+            <div class="step">No mereces</div>
+            <div class="step">No te gusta quien eres</div>
+          </div>
+          <div class="quote"><strong>"Si sé quién soy y me encanta quién soy."</strong></div>
+        </div>
+      </div>
+
+      <!-- Alfredo Mota -->
+      <div class="speaker-card" id="card-alfredo" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#43e97b,#38f9d7)">AM</div>
+          <div class="card-meta">
+            <h3>Alfredo Mota</h3>
+            <div class="topic">Infoproductos · Webinars · E-commerce</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="note-list">
+            <li>Todo el conocimiento es valioso — debes saber transmitirlo</li>
+            <li>Si quieres emprender sin dinero: ofrece un servicio de alto valor agregado</li>
+          </ul>
+          <div class="section-title">Modelos de negocio digital</div>
+          <div class="pill-list">
+            <span class="pill">Infoproductos</span>
+            <span class="pill green">Webinars / Masterclass</span>
+            <span class="pill">VSL (Lanzamiento digital)</span>
+            <span class="pill green">E-commerce</span>
+          </div>
+          <div class="section-title">Cómo hacer un webinar</div>
+          <ul class="note-list">
+            <li>Hacer una masterclass</li>
+            <li>Vender una metodología al final</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Laura Baes -->
+      <div class="speaker-card" id="card-laura" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#fa709a,#fee140)">LB</div>
+          <div class="card-meta">
+            <h3>Laura Baes</h3>
+            <div class="topic">Propósito · Neuroplasticidad · Mentalidad</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="note-list">
+            <li>La pobreza está en la manera que pensamos y actuamos</li>
+            <li>Encontrar tu propósito</li>
+            <li>Neuroplasticidad — tu cerebro puede moldearse</li>
+          </ul>
+          <div class="quote"><strong>"¿Qué tan grande es tu arca?"</strong></div>
+        </div>
+      </div>
+
+      <!-- Memo Serrano -->
+      <div class="speaker-card" id="card-memo" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#4facfe,#00f2fe)">MS</div>
+          <div class="card-meta">
+            <h3>Memo Serrano</h3>
+            <div class="topic">Identidad · Mentalidad · Incomodidad</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="highlight-box">Para lograr lo que quieres: <strong>95% es mentalidad</strong></div>
+          <div class="section-title">Lo que te frena</div>
+          <div class="pill-list">
+            <span class="pill">Miedo a la deuda</span>
+            <span class="pill">No delegar</span>
+            <span class="pill">Miedo al rechazo</span>
+            <span class="pill">Baja tolerancia al malestar</span>
+            <span class="pill">Procrastinación inteligente</span>
+            <span class="pill">Necesidad de validación</span>
+          </div>
+          <div class="quote">
+            <strong>"Cuando Dios se da cuenta de que no estás creciendo, te va a poner incómodo."</strong>
+          </div>
+          <div class="section-title">La identidad y los hábitos</div>
+          <ul class="note-list">
+            <li>Lo que te detiene es la identidad y los hábitos del camino fácil de tu cerebro</li>
+            <li>Las personas no aplican lo que saben</li>
+            <li>La identidad es cómo te comportas</li>
+          </ul>
+          <div class="quote"><strong>"La versión de ti que hace lo que dice no se mide en cuántos cursos compra sino en cuánta incomodidad eres capaz de sostener."</strong></div>
+        </div>
+      </div>
+
+      <!-- Paola Padilla -->
+      <div class="speaker-card" id="card-paola" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#a18cd1,#fbc2eb)">PP</div>
+          <div class="card-meta">
+            <h3>Paola Padilla</h3>
+            <div class="topic">Eventos como portales · Conciencia · Ecosistemas</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="quote"><strong>"Un evento es una habitación llena de futuros posibles."</strong></div>
+          <div class="section-title">Los 3 niveles de conciencia</div>
+          <div class="steps-list">
+            <div class="step">Solo conoces una realidad</div>
+            <div class="step">Descubres que existen más opciones</div>
+            <div class="step">Entiendes que apenas empiezas a ver</div>
+          </div>
+          <ul class="note-list">
+            <li>Un contexto diferente normaliza un estándar que antes no hubieras imaginado</li>
+            <li>Cambiar tu normalidad cambia tu futuro</li>
+            <li>El ecosistema genera oportunidades</li>
+            <li>Las experiencias correctas son aceleradores de liderazgo</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Alejandro Cardona -->
+      <div class="speaker-card" id="card-cardona" data-day="d1">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#f093fb,#f5576c)">AC</div>
+          <div class="card-meta">
+            <h3>Alejandro Cardona</h3>
+            <div class="topic">Finanzas · Libertad financiera · Inversión</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="note-list">
+            <li>Gente con mucho dinero se endeuda y termina empeñando</li>
+            <li>Hay que tener negocio propio pero también ingresos pasivos (rentas, regalías)</li>
+          </ul>
+          <div class="section-title">Fórmula de libertad financiera</div>
+          <div class="highlight-box">📐 Pasivos + Portafolios > Gastos fijos = <strong>Libertad financiera</strong></div>
+          <ul class="note-list">
+            <li>Cambia la estructura celular en nuestra mente — autosugestión</li>
+            <li>Nuestra mente no hace lo que queremos sino lo que le ordenamos</li>
+            <li>Las acciones se compran después de una caída, en zona verde</li>
+          </ul>
+          <div class="section-title">Fuentes de ingresos</div>
+          <div class="pill-list">
+            <span class="pill gold">Negocio propio</span>
+            <span class="pill gold">Ingresos pasivos</span>
+            <span class="pill gold">Portafolio de inversión</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /d1 -->
+
+    <!-- ════════════ DÍA 2 ════════════ -->
+    <div class="day-section" id="section-d2">
+      <div class="day-header">
+        <span class="day-tag d2">Día 2</span>
+        <h2>Comunicación · Liderazgo · Marca Personal</h2>
+        <p>Profundización en herramientas prácticas y networking</p>
+      </div>
+
+      <!-- Claudia Lizaldi -->
+      <div class="speaker-card" id="card-claudia" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#fd7043,#e91e63)">CL</div>
+          <div class="card-meta">
+            <h3>Claudia Lizaldi</h3>
+            <div class="topic">Amor propio · Creencias · Despertar</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="quote"><strong>"El paraíso y el infierno están en la mente."</strong></div>
+          <ul class="note-list">
+            <li>Date cuenta de la vida — ve lo que estás viviendo</li>
+            <li>Lo malo pasa pero lo bueno también</li>
+            <li>No todo se trata de entender — se trata de integrar</li>
+            <li>No temas equivocarte, el error es un gran maestro</li>
+            <li>Equivócate rápido, así lo puedes solucionar</li>
+          </ul>
+          <div class="section-title">Ámarte a ti mismo significa…</div>
+          <ul class="note-list">
+            <li>¿Quién es el amor de tu vida?</li>
+            <li>¿Cómo te tratas?</li>
+            <li>¿Qué acciones tomas para el amor de tu vida (tú)?</li>
+            <li>Cuando te amas te respetas</li>
+          </ul>
+          <div class="highlight-box">🧠 Tu sistema de creencias es como ves la vida — se puede nutrir</div>
+        </div>
+      </div>
+
+      <!-- Fernando Anzures -->
+      <div class="speaker-card" id="card-fer-anzures" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#0f3460,#533483)">FA</div>
+          <div class="card-meta">
+            <h3>Fernando Anzures</h3>
+            <div class="topic">Marca Personal · Visibilidad · Networking estratégico</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="note-list">
+            <li>Las creencias se rompen actuando</li>
+            <li>Cámbiate de mesa y cambiará tu cabeza</li>
+            <li>Nadie invita a quien no ubica — necesitas visibilidad</li>
+            <li>Nunca pienses que una mesa te queda grande</li>
+          </ul>
+          <div class="section-title">Las 3 Improntas</div>
+          <div class="pill-list">
+            <span class="pill">Podcast</span>
+            <span class="pill">Comunidad</span>
+            <span class="pill">Diferencial único</span>
+          </div>
+          <div class="section-title">Tipos de contactos</div>
+          <ul class="note-list">
+            <li><strong>Conectores</strong> — conoce al que te abre la puerta</li>
+            <li><strong>Influenciadores</strong> — famosos, referentes</li>
+            <li><strong>Replicadores</strong> — crear y construir</li>
+          </ul>
+          <div class="quote"><strong>"La comunidad hace que cada contacto se convierta en un activo."</strong></div>
+          <ul class="note-list">
+            <li>Crea un Wow factor — eso hará que te llamen</li>
+            <li>Visibilidad es la nueva moneda de cambio</li>
+            <li>Una marca personal se construye con hechos</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Efrén Martínez -->
+      <div class="speaker-card" id="card-efren" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#2ecc71,#3498db)">EM</div>
+          <div class="card-meta">
+            <h3>Efrén Martínez</h3>
+            <div class="topic">Sentido del trabajo · Propósito · Satisfacción</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">Los 3 factores que más roban sentido a la vida</div>
+          <div class="steps-list">
+            <div class="step">Percibir un bajo éxito laboral</div>
+            <div class="step">No percibir que lo que haces aporta valor</div>
+            <div class="step">No experimentar</div>
+          </div>
+          <div class="section-title">Mindsets</div>
+          <div class="pill-list">
+            <span class="pill">Contribución</span>
+            <span class="pill">Experiencial</span>
+            <span class="pill green">Logro</span>
+            <span class="pill green">Ansiológica</span>
+          </div>
+          <ul class="note-list">
+            <li>Entre más satisfecho estás en lo que haces más disfrutas a tu familia</li>
+            <li>Si no percibes valor no hay alegría ni percepción de pago</li>
+          </ul>
+          <div class="quote"><strong>"Deja de ser uno más. ¿Cuál es tu propósito — intención noble?"</strong></div>
+        </div>
+      </div>
+
+      <!-- Luis Fallas -->
+      <div class="speaker-card" id="card-luis" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#f7971e,#ffd200)">LF</div>
+          <div class="card-meta">
+            <h3>Luis Fallas</h3>
+            <div class="topic">10 herramientas para el éxito</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="steps-list">
+            <div class="step">Continuar cuando la mente pide que pares</div>
+            <div class="step">Primero mantenerse enfocado en que tu empresa funcione</div>
+            <div class="step">Trabaja duro aunque nadie te esté mirando</div>
+            <div class="step">Muévete aunque no te sientas listo</div>
+            <div class="step">No trabajes en base a tus emociones</div>
+            <div class="step">Recuerda: ese segundo esfuerzo separa a los triunfadores</div>
+            <div class="step">Analízate sin mentirte</div>
+            <div class="step">Protege tu enfoque</div>
+            <div class="step">Prepárate como si la oportunidad fuera mañana</div>
+            <div class="step">Trabaja para un bien mayor</div>
+          </div>
+          <div class="highlight-box">El ser humano no logra lo que quiere sino lo que se enfoca</div>
+        </div>
+      </div>
+
+      <!-- Regina Carrot / Daniel Marcos -->
+      <div class="speaker-card" id="card-daniel" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#6a11cb,#2575fc)">DM</div>
+          <div class="card-meta">
+            <h3>Daniel Marcos + Regina Carrot</h3>
+            <div class="topic">CEOs · Comunicación magnética · Storytelling</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">Daniel Marcos — CEO</div>
+          <div class="quote"><strong>"Tu empresa no puede escalar más rápido que tú."</strong></div>
+          <ul class="note-list">
+            <li>Nadie te enseña a ser CEO</li>
+            <li>Saber priorizar, medir y comunicar</li>
+            <li>Mis ingresos deben estar más arriba que mis gastos</li>
+          </ul>
+          <div class="section-title">Regina Carrot — Speaker Magnético</div>
+          <div class="pill-list">
+            <span class="pill">Storytelling</span>
+            <span class="pill">Storyselling</span>
+          </div>
+          <div class="steps-list">
+            <div class="step">Construir autoridad: quién eres, qué haces, cuál es la transformación</div>
+            <div class="step">Método 30-30-30: educación / autoridad / conexión</div>
+            <div class="step">Elevator pitch: ¿a quién ayudas?, ¿qué problema resuelves?, ¿qué resultado generas?</div>
+          </div>
+          <div class="quote"><strong>"Tu empresa crece al mismo ritmo que tu capacidad de comunicar."</strong></div>
+        </div>
+      </div>
+
+      <!-- Salvador Alba -->
+      <div class="speaker-card" id="card-salvador" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#1a1a2e,#e94560)">SA</div>
+          <div class="card-meta">
+            <h3>Salvador Alba</h3>
+            <div class="topic">Ser vs Tener · Autenticidad · Propósito</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="quote"><strong>"El éxito nos dio todo menos el tiempo para vivirlo."</strong></div>
+          <ul class="note-list">
+            <li>Vivir con sentido, autenticidad y propósito</li>
+            <li>Cuanto más te enfocas en el ser eres más libre</li>
+            <li>Dejar de ver afuera — volver a la esencia</li>
+            <li>Felicidad es disfrutar lo que eres</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Chencho García -->
+      <div class="speaker-card" id="card-chencho" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#11998e,#38ef7d)">CG</div>
+          <div class="card-meta">
+            <h3>Chencho García</h3>
+            <div class="topic">Inteligencia emocional · Equipos · Liderazgo</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">Pilares IE</div>
+          <div class="pill-list">
+            <span class="pill">Autoconocimiento</span>
+            <span class="pill">Autocontrol</span>
+            <span class="pill green">Automotivación</span>
+            <span class="pill green">Habilidades sociales</span>
+          </div>
+          <div class="section-title">4 elementos del resultado deseado</div>
+          <div class="steps-list">
+            <div class="step">Comunicación desde la autoestima alta</div>
+            <div class="step">Objetivo en común — claridad de lo deseado</div>
+            <div class="step">Trabajo en equipo respetando el rol de cada integrante</div>
+            <div class="step">Respeto</div>
+          </div>
+          <div class="quote"><strong>"Los fracasos y dificultades son ingredientes del éxito."</strong></div>
+        </div>
+      </div>
+
+      <!-- Milena Sandoval -->
+      <div class="speaker-card" id="card-milena" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#f953c6,#b91d73)">MSa</div>
+          <div class="card-meta">
+            <h3>Milena Sandoval</h3>
+            <div class="topic">Comunicación empresarial · Errores</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="quote"><strong>"Los fracasos de la empresa se deben a la mala comunicación."</strong></div>
+          <div class="section-title">Errores que destruyen la comunicación</div>
+          <div class="pill-list">
+            <span class="pill">Distorsionar</span>
+            <span class="pill">Omitir</span>
+            <span class="pill">Generalizar</span>
+          </div>
+          <ul class="note-list">
+            <li>Comunicar no es hablar — es mover a la acción</li>
+            <li>La coherencia es comunicación</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Rubén Duke -->
+      <div class="speaker-card" id="card-ruben" data-day="d2">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#2c3e50,#4ca1af)">RD</div>
+          <div class="card-meta">
+            <h3>Rubén Duke</h3>
+            <div class="topic">Liderazgo intangible · Equipos · Casa vs Hogar</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="note-list">
+            <li>Ser líder: primero te dan el título y luego estudias la carrera</li>
+            <li>Liderar siempre tiene que servir a otros</li>
+            <li>La acción es lo único que genera el cambio</li>
+            <li>El ejemplo es la orden muda</li>
+          </ul>
+          <div class="section-title">Intangibles que liderás</div>
+          <div class="pill-list">
+            <span class="pill gold">Confianza</span>
+            <span class="pill gold">Amor</span>
+            <span class="pill gold">Respeto</span>
+            <span class="pill gold">Lealtad</span>
+          </div>
+          <div class="highlight-box">🏠 Los equipos son o casas u hogares — con liderazgo puedes pasar de casa a hogar</div>
+          <div class="section-title">Las 2 pastillas</div>
+          <ul class="note-list">
+            <li><strong>Pastilla azul</strong> — gestión de lo tangible: aptitudes, medible, intelectual</li>
+            <li><strong>Pastilla roja</strong> — lo intangible: actitudes, inteligencia emocional, influencia</li>
+          </ul>
+          <div class="quote"><strong>"Si solo eres bueno en lo técnico, la gente te entregará su mínimo."</strong></div>
+        </div>
+      </div>
+
+    </div><!-- /d2 -->
+
+    <!-- ════════════ DOMINGO ════════════ -->
+    <div class="day-section" id="section-d3">
+      <div class="day-header">
+        <span class="day-tag d3">Domingo</span>
+        <h2>Identidad · Finanzas · Cierre & Acción</h2>
+        <p>El día de la transformación y compromisos</p>
+      </div>
+
+      <!-- Fer León -->
+      <div class="speaker-card" id="card-fer-leon" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#7b4f9e,#3a86ff)">FL</div>
+          <div class="card-meta">
+            <h3>Fer León</h3>
+            <div class="topic">Pilares del liderazgo · Método FER</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="note-list">
+            <li>Permítete ser principiante las veces que sea necesario</li>
+            <li>Todo lo que nace desde el amor florece</li>
+            <li>Un negocio solo escala hasta el nivel de conciencia de quien lo dirige</li>
+          </ul>
+          <div class="section-title">Método FER</div>
+          <div class="formula-grid">
+            <div class="formula-item"><span class="letter">F</span>ortaleza mental y emocional</div>
+            <div class="formula-item"><span class="letter">E</span>structura empresarial</div>
+            <div class="formula-item"><span class="letter">R</span>eputación / Marca</div>
+          </div>
+          <div class="quote">Pensamientos → Emoción → Reacción</div>
+          <ul class="note-list">
+            <li>Lo que no mides, no lo puedes mejorar</li>
+            <li>Genera un manual — documenta</li>
+          </ul>
+          <div class="section-title">Pilares de la marca</div>
+          <div class="pill-list">
+            <span class="pill">Conocimiento</span>
+            <span class="pill">Historia</span>
+            <span class="pill">Presencia</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coral Muajes -->
+      <div class="speaker-card" id="card-coral" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#ff9a9e,#fecfef)">CM</div>
+          <div class="card-meta">
+            <h3>Coral Muajes</h3>
+            <div class="topic">Marketing · Resultados · Simplificar el juego</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="highlight-box">💡 No se recompensa a quien sabe más sino al que tiene la capacidad de hacer una transformación</div>
+          <ul class="note-list">
+            <li>La gente no compra conocimiento — compra resultados</li>
+            <li>Tu entorno eleva tus estándares</li>
+            <li>Detecta cuál es la transformación que ofrece tu negocio y véndelo así</li>
+          </ul>
+          <div class="quote"><strong>"Los principiantes se enamoran del conocimiento; los expertos, de los resultados."</strong></div>
+          <div class="highlight-box">Lo que vale hoy es la capacidad de comunicar — <strong>obsesiónate con los resultados</strong></div>
+        </div>
+      </div>
+
+      <!-- Tito Luzardo -->
+      <div class="speaker-card" id="card-tito" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#f6d365,#fda085)">TL</div>
+          <div class="card-meta">
+            <h3>Tito Luzardo</h3>
+            <div class="topic">Identidad · Historia · Transformación</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="quote"><strong>"No es lo mismo no tener y querer tener, que tener y no tener."</strong></div>
+          <ul class="note-list">
+            <li>Las historias y creencias son transferibles por ósmosis</li>
+            <li>Cuando tu maldición se convierte en tu bendición — ahí empieza tu vida</li>
+            <li>El ego tiende a jugarnos en contra cuando nos va bien</li>
+            <li>El éxito es un mal profesor; el fracaso es el mejor</li>
+          </ul>
+          <div class="section-title">Fórmula de transformación</div>
+          <div class="formula-grid">
+            <div class="formula-item"><span class="letter" style="font-size:1rem">10%</span>Estrategia correcta</div>
+            <div class="formula-item"><span class="letter" style="font-size:1rem">30%</span>Historia correcta</div>
+            <div class="formula-item"><span class="letter" style="font-size:1rem">60%</span>Identidad correcta</div>
+          </div>
+          <div class="quote"><strong>"No hay fuerza más poderosa para el ser humano que ser congruente con su identidad."</strong></div>
+          <div class="section-title">Para transformar tu identidad necesitas</div>
+          <div class="steps-list">
+            <div class="step">Metas claras — cada piedra que te ha tirado la vida es la estructura para tu castillo</div>
+            <div class="step">Repetición</div>
+            <div class="step">Ambiente correcto: no puedes crecer flores en el desierto</div>
+          </div>
+          <div class="quote"><strong>"El cambio solo pasa cuando el dolor al mantenerte igual es mayor que el dolor a cambiar."</strong></div>
+        </div>
+      </div>
+
+      <!-- Ale Tejeda -->
+      <div class="speaker-card" id="card-ale" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#30cfd0,#330867)">AT</div>
+          <div class="card-meta">
+            <h3>Ale Tejeda</h3>
+            <div class="topic">Autosabotaje · Imparable · Contratos invisibles</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">3 contratos invisibles que te frenan</div>
+          <div class="steps-list">
+            <div class="step">Si no es perfecto no lo hago — la perfección no te permite ser principiante</div>
+            <div class="step">Mi confianza y valor dependen de lo que logro</div>
+            <div class="step">La validación externa me hace sentir capaz</div>
+          </div>
+          <div class="section-title">3 mentiras que te cuentas</div>
+          <div class="steps-list">
+            <div class="step">Me falta disciplina y motivación</div>
+            <div class="step">Estoy ocupado y no tengo tiempo</div>
+            <div class="step">Necesito capacitarme más antes de actuar</div>
+          </div>
+          <div class="section-title">Fórmula del torbellino imparable</div>
+          <div class="formula-grid">
+            <div class="formula-item"><span class="letter">SER</span> </div>
+            <div class="formula-item"><span class="letter">+</span>HACER</div>
+            <div class="formula-item"><span class="letter">TENER</span> </div>
+          </div>
+          <div class="section-title">Herramienta: Nombra a tu Petunia</div>
+          <div class="highlight-box">
+            Mi autosabotaje se llama ____<br>
+            Su frase favorita es ____<br>
+            La evidencia real que lo desmiente es ____
+          </div>
+        </div>
+      </div>
+
+      <!-- Alejandro Saracho -->
+      <div class="speaker-card" id="card-saracho" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#43e97b,#38f9d7)">AS</div>
+          <div class="card-meta">
+            <h3>Alejandro Saracho</h3>
+            <div class="topic">Reconfiguración financiera · Libertad financiera</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">Diagnóstico financiero (¿cumples?)</div>
+          <ul class="note-list">
+            <li>Ganas el doble de lo que gastas</li>
+            <li>Sabes exactamente cuánto gastas al mes</li>
+            <li>Si tienes deudas, pagas menos del 30% de tus ingresos</li>
+            <li>El valor de tus inversiones supera el de tus posesiones</li>
+            <li>Los rendimientos de tus inversiones cubren tus gastos de estilo de vida</li>
+          </ul>
+          <div class="section-title">Metodología de reconfiguración</div>
+          <div class="steps-list">
+            <div class="step"><strong>Piensa</strong> — responsabilidad y círculo cercano</div>
+            <div class="step"><strong>Gana</strong> — ingreso por trabajo / negocio / experiencia</div>
+            <div class="step"><strong>Administra</strong> — simplifica gastos / presupuesto mensual</div>
+            <div class="step"><strong>Invierte</strong> — negocios, bienes raíces, bolsa, metales, propiedad intelectual</div>
+            <div class="step"><strong>Potencia</strong> — 3 acciones a implementar</div>
+          </div>
+          <div class="highlight-box">📐 LF = IP > G (Libertad Financiera = Ingresos Pasivos > Gastos)</div>
+        </div>
+      </div>
+
+      <!-- Víctor Heras -->
+      <div class="speaker-card" id="card-victor" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#1a1a2e,#16213e)">VH</div>
+          <div class="card-meta">
+            <h3>Víctor Heras</h3>
+            <div class="topic">Redes sociales · Contenido · Niveles de conciencia</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="section-title">Error #1 en redes sociales</div>
+          <div class="highlight-box">❌ Hacer "contenido de valor" atrae clientes que no quieren pagar por tus servicios</div>
+          <div class="section-title">Los 5 niveles de conciencia del cliente</div>
+          <div class="steps-list">
+            <div class="step"><strong>0.</strong> No sabe que tiene un problema</div>
+            <div class="step"><strong>1.</strong> Sabe que tiene un problema</div>
+            <div class="step"><strong>2.</strong> Sabe cómo solucionar el problema</div>
+            <div class="step"><strong>3.</strong> Sabe con quién solucionarlo</div>
+            <div class="step"><strong>4.</strong> Sabe con qué producto exactamente</div>
+          </div>
+          <div class="quote"><strong>"El 90% de las personas en un nicho están en niveles 0 y 1."</strong></div>
+          <div class="highlight-box">🔑 La clave no es explicar el cómo — es explicar el <strong>por qué</strong></div>
+        </div>
+      </div>
+
+      <!-- Manuel "10 Monstruos" -->
+      <div class="speaker-card" id="card-manuel-monstruos" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#f0c04a,#e08030)">ML</div>
+          <div class="card-meta">
+            <h3>Manuel de León — 10 Monstruos</h3>
+            <div class="topic">Barreras internas y externas para transformar tu vida</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="steps-list">
+            <div class="step">Parálisis por análisis</div>
+            <div class="step">Miedo a lo desconocido</div>
+            <div class="step">Dudar de tu propio potencial</div>
+            <div class="step">Miopía de metas</div>
+            <div class="step">Miedo a invertir en ti</div>
+            <div class="step">Falta de conectividad económica</div>
+            <div class="step">Limitación geográfica</div>
+            <div class="step">Buscar siempre 100% de claridad</div>
+            <div class="step">Tu círculo familiar</div>
+            <div class="step">Hoyo negro del tiempo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spencer Hoffman -->
+      <div class="speaker-card" id="card-spencer" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#ee0979,#ff6a00)">SH</div>
+          <div class="card-meta">
+            <h3>Spencer Hoffman</h3>
+            <div class="topic">Resiliencia · Mentalidad · Regla de los 5 años</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="note-list">
+            <li>Historia personal de resiliencia tras una embolia</li>
+            <li>¿Cómo sí lo puedo lograr? — pregunta que cambia perspectiva</li>
+            <li>¿Cuál es el siguiente paso?</li>
+          </ul>
+          <div class="quote"><strong>"El éxito no se logra, se renta y se paga todos los días."</strong></div>
+          <ul class="note-list">
+            <li>La proximidad es poder</li>
+            <li>Cuando la promesa es clara, el precio a pagar es poco</li>
+            <li>Regla de los 5 años — proyéctate</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Dr. Roch -->
+      <div class="speaker-card" id="card-drroch" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#1e3c72,#2a5298)">DR</div>
+          <div class="card-meta">
+            <h3>Dr. Roch</h3>
+            <div class="topic">Frecuencia del dinero · TIMO · Espiritualidad financiera</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="quote"><strong>"No persigas el dinero; despierta a la persona que es capaz de atraerlo."</strong></div>
+          <div class="section-title">La escalera de frecuencias</div>
+          <div class="formula-grid">
+            <div class="formula-item"><span class="letter" style="color:var(--accent2)">48Hz</span>Espíritu</div>
+            <div class="formula-item"><span class="letter" style="color:var(--accent3);font-size:1rem">30-40Hz</span>Realidad cruda</div>
+            <div class="formula-item"><span class="formula-item"><span class="letter" style="color:var(--gold);font-size:1rem">24Hz</span>Emoción</div>
+            <div class="formula-item"><span class="letter" style="color:var(--muted);font-size:1rem">12Hz</span>Mente que miente</div>
+          </div>
+          <div class="section-title">La realidad cruda del dinero</div>
+          <div class="steps-list">
+            <div class="step">No se gana, se atrae</div>
+            <div class="step">Es de quien lo gasta (con orden)</div>
+            <div class="step">Es una frecuencia</div>
+          </div>
+          <ul class="note-list">
+            <li>Si tu vida no tiene milagros, tu TIMO está apagado</li>
+            <li>El dinero no resuelve traumas</li>
+            <li>Al dinero le gusta regresar al orden</li>
+            <li>Hacer dinero en el cielo: cuando buscas hacer el bien por hacer el bien</li>
+          </ul>
+          <div class="quote"><strong>"Si no eres capaz de eliminarlo, no puedes cambiarlo."</strong></div>
+        </div>
+      </div>
+
+      <!-- Brando Angulo -->
+      <div class="speaker-card" id="card-brando" data-day="d3">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="avatar" style="background: linear-gradient(135deg,#373b44,#4286f4)">BA</div>
+          <div class="card-meta">
+            <h3>Brando Angulo</h3>
+            <div class="topic">Inversión inmobiliaria · Resiliencia · Reinversión</div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <ul class="note-list">
+            <li>Reinversión — no gastar</li>
+            <li>Resiliencia y persistencia como pilares</li>
+            <li>Apalancamiento financiero en proyectos inmobiliarios</li>
+            <li>Rodéate de fregones — personas que te aporten y ayuden a crecer más rápido</li>
+            <li>Reinventarse constantemente</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /d3 -->
+
+    <!-- ════════════ DIAGRAMAS ════════════ -->
+    <div class="day-section" id="section-diagramas">
+      <div class="day-header">
+        <span class="day-tag d0" style="background: rgba(124,92,252,0.2); color: var(--accent2);">Evento</span>
+        <h2>Diagramas de las notas</h2>
+        <p>Visualización en Mermaid de pilares, fórmulas, niveles y pasos mencionados por los speakers</p>
+      </div>
+
+      <div class="diagram-card" id="d-pilares">
+        <div class="head">
+          <h3>Los 5 pilares de Sinergéticos</h3>
+          <div class="src">Jorge Serratos — Apertura</div>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+mindmap
+  root((Sinergéticos))
+    Inspiración
+    Repetición
+    Constancia
+    Recomendaciones
+    Acción
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-estructura">
+        <div class="head">
+          <h3>Estructura del evento — 3 días, 30 speakers</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    evento(["Sinergéticos<br/>30 speakers"]) --> dia1
+    evento --> dia2
+    evento --> dia3
+
+    subgraph dia1 ["Día 1 — Ecosistemas, Mentalidad, Productividad"]
+        direction TB
+        jorge["Jorge Serratos<br/>Apertura"]
+        susy["Susy Bereken<br/>Entorno"]
+        pavo["Pavo Gómez<br/>Productividad"]
+        manuel1["Manuel de León<br/>IA"]
+        ricardo["Ricardo Perret<br/>Poder personal"]
+        alfredo["Alfredo Mota<br/>Infoproductos"]
+        laura["Laura Baes<br/>Propósito"]
+        memo["Memo Serrano<br/>Identidad"]
+        paola["Paola Padilla<br/>Conciencia"]
+        cardona["Alejandro Cardona<br/>Finanzas"]
+    end
+
+    subgraph dia2 ["Día 2 — Comunicación, Liderazgo, Marca"]
+        direction TB
+        claudia["Claudia Lizaldi<br/>Amor propio"]
+        anzures["Fernando Anzures<br/>Marca personal"]
+        efren["Efrén Martínez<br/>Propósito laboral"]
+        luisf["Luis Fallas<br/>10 herramientas"]
+        daniel["Daniel Marcos + Regina Carrot<br/>CEO / Storytelling"]
+        salvador["Salvador Alba<br/>Ser vs Tener"]
+        chencho["Chencho García<br/>Inteligencia emocional"]
+        milena["Milena Sandoval<br/>Comunicación"]
+        ruben["Rubén Duke<br/>Liderazgo intangible"]
+    end
+
+    subgraph dia3 ["Domingo — Identidad, Finanzas, Cierre"]
+        direction TB
+        ferleon["Fer León<br/>Método FER"]
+        coral["Coral Muajes<br/>Marketing"]
+        tito["Tito Luzardo<br/>Identidad"]
+        ale["Ale Tejeda<br/>Autosabotaje"]
+        saracho["Alejandro Saracho<br/>Reconfiguración financiera"]
+        victor["Víctor Heras<br/>Redes sociales"]
+        manuelm["Manuel de León<br/>10 Monstruos"]
+        spencer["Spencer Hoffman<br/>Resiliencia"]
+        drroch["Dr. Roch<br/>Frecuencia del dinero"]
+        brando["Brando Angulo<br/>Inversión inmobiliaria"]
+    end
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-susy">
+        <div class="head">
+          <span class="day-tag d1">Día 1</span>
+          <h3>Susy Bereken — Entorno y fórmula P-E-R</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    entorno(["Entorno = Resultado"]) --> tipos
+
+    subgraph tipos ["3 tipos de personas en tu entorno"]
+        direction TB
+        drenan["1. Nos drenan<br/>(quejas, críticas, drama)"]
+        igual["2. Nos mantienen igual<br/>(comodidad)"]
+        expanden["3. Nos expanden<br/>(te recuerdan tu propósito)"]
+    end
+
+    tipos --> formula
+
+    subgraph formula ["Fórmula P-E-R"]
+        direction LR
+        personas["P<br/>Personas"]
+        experiencias["E<br/>Experiencias"]
+        recursos["R<br/>Recursos"]
+    end
+
+    formula --> clave["🔑 No necesitas que todos<br/>entiendan tu valor"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-pavo">
+        <div class="head">
+          <span class="day-tag d1">Día 1</span>
+          <h3>Pavo Gómez — Superproductividad</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    pensamientos["Pensamientos"] --> emociones["Emociones"]
+    emociones --> acciones["Acciones"]
+    acciones --> habitos["Hábitos"]
+    habitos --> resultados["Resultados"]
+          </pre>
+        </div>
+        <div class="diagram-quote">Base mental → cómo dejar de procrastinar (abajo)</div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    procrastinar(["Dejar de procrastinar"]) --> p1["1. Partir el pan:<br/>grandes metas → pequeñas batallas diarias"]
+    p1 --> p2["2. Eliminar distracciones"]
+    p2 --> p3["3. Método SS:<br/>no le des permiso a tu mente de sabotearte"]
+          </pre>
+        </div>
+        <div class="diagram-quote">Ciclo del hábito (Señal → Rutina → Premio)</div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    senal["Señal"] --> rutina["Rutina"] --> premio["Premio"] --> senal
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-manuel1">
+        <div class="head">
+          <span class="day-tag d1">Día 1</span>
+          <h3>Manuel de León — Vida legendaria con IA</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    ia(["IA no reemplaza personas,<br/>reemplaza sus límites"]) --> prompt
+
+    subgraph prompt ["4 elementos de un buen prompt"]
+        direction TB
+        objetivo["1. Objetivo"]
+        como["2. ¿Cómo quiero que lo haga?"]
+        formato["3. Cómo quiero que me entregues la info"]
+        contexto["4. Contexto"]
+    end
+
+    ia --> hacks
+
+    subgraph hacks ["Hacks por área"]
+        direction LR
+        salud["Salud<br/>medirse, apps oficiales,<br/>predecir enfermedades"]
+        mente["Mente<br/>Obsidian, Deep Research,<br/>NotebookLM"]
+        profesion["Profesión<br/>VS Code, crear empleados IA,<br/>Lovable"]
+        espiritu["Espíritu<br/>journal con Claude,<br/>Hallow"]
+    end
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-ricardo">
+        <div class="head">
+          <span class="day-tag d1">Día 1</span>
+          <h3>Ricardo Perret — Recupera tu poder</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    poder(["¿Cómo perdemos nuestro poder?"]) --> robar["Nos lo roban"]
+    poder --> entregar["Lo entregamos"]
+    poder --> drenar["Se nos drena"]
+
+    creencias(["Las 4 creencias limitantes"]) --> c1["1. No puedes"]
+    c1 --> c2["2. No eres aceptado"]
+    c2 --> c3["3. No mereces"]
+    c3 --> c4["4. No te gusta quien eres"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-paola">
+        <div class="head">
+          <span class="day-tag d1">Día 1</span>
+          <h3>Paola Padilla — 3 niveles de conciencia</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    n1["1. Solo conoces una realidad"] --> n2["2. Descubres que existen más opciones"]
+    n2 --> n3["3. Entiendes que apenas empiezas a ver"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-cardona">
+        <div class="head">
+          <span class="day-tag d1">Día 1</span>
+          <h3>Alejandro Cardona — Libertad financiera</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    pasivos["Pasivos"] --> suma{"+"}
+    portafolios["Portafolios"] --> suma
+    suma --> comparar{">"}
+    gastos["Gastos fijos"] --> comparar
+    comparar --> libertad(["Libertad financiera"])
+          </pre>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    fuentes(["Fuentes de ingresos"]) --> negocio["Negocio propio"]
+    fuentes --> pasivo["Ingresos pasivos"]
+    fuentes --> inversion["Portafolio de inversión"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-anzures">
+        <div class="head">
+          <span class="day-tag d2">Día 2</span>
+          <h3>Fernando Anzures — Marca personal y networking</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    marca(["Marca personal"]) --> improntas
+
+    subgraph improntas ["Las 3 improntas"]
+        direction LR
+        podcast["Podcast"]
+        comunidad["Comunidad"]
+        diferencial["Diferencial único"]
+    end
+
+    marca --> contactos
+
+    subgraph contactos ["Tipos de contactos"]
+        direction TB
+        conectores["Conectores<br/>te abren la puerta"]
+        influenciadores["Influenciadores<br/>famosos, referentes"]
+        replicadores["Replicadores<br/>crear y construir"]
+    end
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-efren">
+        <div class="head">
+          <span class="day-tag d2">Día 2</span>
+          <h3>Efrén Martínez — Sentido del trabajo</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    factores(["3 factores que roban sentido a la vida"]) --> f1["1. Percibir bajo éxito laboral"]
+    f1 --> f2["2. No percibir que aportas valor"]
+    f2 --> f3["3. No experimentar"]
+
+    mindsets(["Mindsets"]) --> contribucion["Contribución"]
+    mindsets --> experiencial["Experiencial"]
+    mindsets --> logro["Logro"]
+    mindsets --> axiologica["Axiológica"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-luisfallas">
+        <div class="head">
+          <span class="day-tag d2">Día 2</span>
+          <h3>Luis Fallas — 10 herramientas para el éxito</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    h1["1. Continuar cuando la mente pide parar"] --> h2["2. Mantenerte enfocado en que tu empresa funcione"]
+    h2 --> h3["3. Trabaja duro aunque nadie te mire"]
+    h3 --> h4["4. Muévete aunque no te sientas listo"]
+    h4 --> h5["5. No trabajes en base a tus emociones"]
+    h5 --> h6["6. El segundo esfuerzo separa a los triunfadores"]
+    h6 --> h7["7. Analízate sin mentirte"]
+    h7 --> h8["8. Protege tu enfoque"]
+    h8 --> h9["9. Prepárate como si la oportunidad fuera mañana"]
+    h9 --> h10["10. Trabaja para un bien mayor"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-daniel">
+        <div class="head">
+          <span class="day-tag d2">Día 2</span>
+          <h3>Daniel Marcos + Regina Carrot — CEO y comunicación magnética</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    autoridad(["Construir autoridad"]) --> quien["¿Quién eres?"]
+    autoridad --> hace["¿Qué haces?"]
+    autoridad --> transforma["¿Cuál es la transformación?"]
+
+    metodo(["Método 30-30-30"]) --> educacion["Educación"]
+    metodo --> autoridad2["Autoridad"]
+    metodo --> conexion["Conexión"]
+
+    pitch(["Elevator pitch"]) --> ayudas["¿A quién ayudas?"]
+    pitch --> problema["¿Qué problema resuelves?"]
+    pitch --> resultado["¿Qué resultado generas?"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-chencho">
+        <div class="head">
+          <span class="day-tag d2">Día 2</span>
+          <h3>Chencho García — Inteligencia emocional</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    pilares(["Pilares de IE"]) --> auto["Autoconocimiento"]
+    pilares --> control["Autocontrol"]
+    pilares --> motivacion["Automotivación"]
+    pilares --> social["Habilidades sociales"]
+
+    resultado(["4 elementos del resultado deseado"]) --> r1["1. Comunicación desde autoestima alta"]
+    r1 --> r2["2. Objetivo en común"]
+    r2 --> r3["3. Trabajo en equipo respetando roles"]
+    r3 --> r4["4. Respeto"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-ruben">
+        <div class="head">
+          <span class="day-tag d2">Día 2</span>
+          <h3>Rubén Duke — Liderazgo intangible</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    pastilla{"Las 2 pastillas"} --> azul["Pastilla azul<br/>tangible: aptitudes,<br/>medible, intelectual"]
+    pastilla --> roja["Pastilla roja<br/>intangible: actitudes,<br/>inteligencia emocional, influencia"]
+
+    intangibles(["Intangibles que liderás"]) --> confianza["Confianza"]
+    intangibles --> amor["Amor"]
+    intangibles --> respeto["Respeto"]
+    intangibles --> lealtad["Lealtad"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-ferleon">
+        <div class="head">
+          <span class="day-tag d3">Domingo</span>
+          <h3>Fer León — Método FER</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    f["F<br/>Fortaleza mental y emocional"] --> e["E<br/>Estructura empresarial"]
+    e --> r["R<br/>Reputación / Marca"]
+          </pre>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    pensamientos2["Pensamientos"] --> emocion2["Emoción"] --> reaccion["Reacción"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-tito">
+        <div class="head">
+          <span class="day-tag d3">Domingo</span>
+          <h3>Tito Luzardo — Fórmula de transformación</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+pie title Fórmula de transformación
+    "Estrategia correcta (10%)" : 10
+    "Historia correcta (30%)" : 30
+    "Identidad correcta (60%)" : 60
+          </pre>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    necesitas(["Para transformar tu identidad necesitas"]) --> t1["1. Metas claras"]
+    t1 --> t2["2. Repetición"]
+    t2 --> t3["3. Ambiente correcto<br/>(no crecen flores en el desierto)"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-ale">
+        <div class="head">
+          <span class="day-tag d3">Domingo</span>
+          <h3>Ale Tejeda — Autosabotaje</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    contratos(["3 contratos invisibles que te frenan"]) --> c1["1. Si no es perfecto no lo hago"]
+    contratos --> c2["2. Mi confianza depende de lo que logro"]
+    contratos --> c3["3. La validación externa me hace sentir capaz"]
+
+    mentiras(["3 mentiras que te cuentas"]) --> m1["1. Me falta disciplina y motivación"]
+    mentiras --> m2["2. Estoy ocupado, no tengo tiempo"]
+    mentiras --> m3["3. Necesito capacitarme más antes de actuar"]
+          </pre>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    ser["SER"] --> hacer["HACER"] --> tener["TENER"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-saracho">
+        <div class="head">
+          <span class="day-tag d3">Domingo</span>
+          <h3>Alejandro Saracho — Reconfiguración financiera</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    piensa["Piensa<br/>responsabilidad y<br/>círculo cercano"] --> gana["Gana<br/>trabajo / negocio /<br/>experiencia"]
+    gana --> administra["Administra<br/>simplifica gastos /<br/>presupuesto"]
+    administra --> invierte["Invierte<br/>negocios, bienes raíces,<br/>bolsa, metales"]
+    invierte --> potencia["Potencia<br/>3 acciones a implementar"]
+          </pre>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    ip["Ingresos Pasivos (IP)"] --> comparar2{">"}
+    g["Gastos (G)"] --> comparar2
+    comparar2 --> lf(["Libertad Financiera (LF)"])
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-victor">
+        <div class="head">
+          <span class="day-tag d3">Domingo</span>
+          <h3>Víctor Heras — Niveles de conciencia del cliente</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart LR
+    n0["0. No sabe que tiene<br/>un problema"] --> n1b["1. Sabe que tiene<br/>un problema"]
+    n1b --> n2b["2. Sabe cómo<br/>solucionarlo"]
+    n2b --> n3b["3. Sabe con quién<br/>solucionarlo"]
+    n3b --> n4b["4. Sabe con qué<br/>producto exactamente"]
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-manuelm">
+        <div class="head">
+          <span class="day-tag d3">Domingo</span>
+          <h3>Manuel de León — 10 Monstruos</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+mindmap
+  root((10 Monstruos))
+    Parálisis por análisis
+    Miedo a lo desconocido
+    Dudar de tu potencial
+    Miopía de metas
+    Miedo a invertir en ti
+    Falta de conectividad económica
+    Limitación geográfica
+    Buscar 100% de claridad
+    Tu círculo familiar
+    Hoyo negro del tiempo
+          </pre>
+        </div>
+      </div>
+
+      <div class="diagram-card" id="d-drroch">
+        <div class="head">
+          <span class="day-tag d3">Domingo</span>
+          <h3>Dr. Roch — Escalera de frecuencias del dinero</h3>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart BT
+    mente["12Hz — Mente que miente"] --> emocion3["24Hz — Emoción"]
+    emocion3 --> realidad["30-40Hz — Realidad cruda"]
+    realidad --> espiritu2["48Hz — Espíritu"]
+          </pre>
+        </div>
+        <div class="mermaid-wrap">
+          <pre class="mermaid">
+flowchart TB
+    cruda(["Realidad cruda del dinero"]) --> r1b["No se gana, se atrae"]
+    cruda --> r2b["Es de quien lo gasta (con orden)"]
+    cruda --> r3b["Es una frecuencia"]
+          </pre>
+        </div>
+      </div>
+
+    </div><!-- /diagramas -->
+
+    <!-- SEARCH RESULTS VIEW -->
+    <div class="day-section" id="section-search">
+      <div class="day-header">
+        <span class="day-tag d1">Búsqueda</span>
+        <h2 id="searchTitle">Resultados</h2>
+      </div>
+      <div id="searchResults"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+  // ── TOGGLE CARD ──
+  function toggleCard(headerEl) {
+    const card = headerEl.closest('.speaker-card');
+    card.classList.toggle('open');
+  }
+
+  // ── TABS ──
+  function showDay(day, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const search = document.getElementById('searchInput');
+    search.value = '';
+    document.getElementById('section-search').classList.remove('visible');
+
+    if (day === 'all') {
+      document.querySelectorAll('.day-section').forEach(s => {
+        if (s.id !== 'section-search' && s.id !== 'section-diagramas') s.classList.add('visible');
+      });
+    } else {
+      document.querySelectorAll('.day-section').forEach(s => {
+        s.classList.toggle('visible', s.id === 'section-' + day);
+      });
+    }
+
+    buildNav(day);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── SIDEBAR NAV ──
+  function buildNav(day) {
+    const nav = document.getElementById('speakerNav');
+    nav.innerHTML = '';
+
+    if (day === 'diagramas') return;
+
+    let cards;
+    if (day === 'all') {
+      cards = document.querySelectorAll('.speaker-card');
+    } else {
+      cards = document.querySelectorAll(`.speaker-card[data-day="${day}"]`);
+    }
+
+    cards.forEach(card => {
+      const name = card.querySelector('h3').textContent;
+      const topic = card.querySelector('.topic').textContent;
+      const btn = document.createElement('button');
+      btn.className = 'nav-item';
+      btn.innerHTML = `<span class="nav-dot"></span>${name}`;
+      btn.title = topic;
+      btn.onclick = () => {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        btn.classList.add('active');
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!card.classList.contains('open')) {
+          card.classList.add('open');
+        }
+      };
+      nav.appendChild(btn);
+    });
+  }
+
+  // ── SEARCH ──
+  const searchInput = document.getElementById('searchInput');
+  let searchTimeout;
+
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => runSearch(this.value.trim()), 200);
+  });
+
+  function runSearch(query) {
+    if (!query) {
+      // restore current tab
+      const activeTab = document.querySelector('.tab-btn.active');
+      if (activeTab) activeTab.click();
+      return;
+    }
+
+    // hide all day sections, show search
+    document.querySelectorAll('.day-section').forEach(s => s.classList.remove('visible'));
+    document.getElementById('section-search').classList.add('visible');
+
+    const q = query.toLowerCase();
+    const allCards = document.querySelectorAll('.speaker-card');
+    const resultsDiv = document.getElementById('searchResults');
+    document.getElementById('searchTitle').textContent = `Resultados para "${query}"`;
+    resultsDiv.innerHTML = '';
+
+    let count = 0;
+    allCards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      if (text.includes(q)) {
+        const clone = card.cloneNode(true);
+        clone.classList.add('open');
+        clone.querySelector('.card-header').onclick = function() { toggleCard(this); };
+
+        // highlight
+        const body = clone.querySelector('.card-body');
+        if (body) body.innerHTML = highlight(body.innerHTML, query);
+
+        resultsDiv.appendChild(clone);
+        count++;
+      }
+    });
+
+    if (count === 0) {
+      resultsDiv.innerHTML = `<div class="no-results">
+        <div style="font-size:3rem">🔍</div>
+        <p style="margin-top:8px">No se encontraron resultados para "<strong>${query}</strong>"</p>
+      </div>`;
+    }
+
+    // update sidebar
+    const nav = document.getElementById('speakerNav');
+    nav.innerHTML = `<div class="sidebar-title">${count} resultado${count !== 1 ? 's' : ''}</div>`;
+  }
+
+  function highlight(html, query) {
+    const esc = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return html.replace(new RegExp(`(${esc})`, 'gi'), '<mark class="highlight">$1</mark>');
+  }
+
+  // ── INIT ──
+  buildNav('d1');
+  mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+</script>
+</body>
+</html>

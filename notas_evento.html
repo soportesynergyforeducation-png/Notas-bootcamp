@@ -50,14 +50,17 @@
   .fade-in { animation: fadeIn 0.45s ease both; }
 
   /* ── HEADER ── */
-  header {
-    background: linear-gradient(135deg, #060c08 0%, #0c1b12 50%, #081410 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 0;
+  .top-bar {
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+
+  header {
+    background: linear-gradient(135deg, #060c08 0%, #0c1b12 50%, #081410 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
   }
 
   .header-inner {
@@ -213,9 +216,9 @@
   /* ── SIDEBAR ── */
   .sidebar {
     position: sticky;
-    top: 100px;
+    top: 140px;
     height: fit-content;
-    max-height: calc(100vh - 120px);
+    max-height: calc(100vh - 160px);
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
@@ -317,7 +320,7 @@
     margin-bottom: 20px;
     overflow: hidden;
     transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
-    scroll-margin-top: 110px;
+    scroll-margin-top: 150px;
   }
 
   .speaker-card:hover {
@@ -628,7 +631,7 @@
     border-radius: 16px;
     margin-bottom: 20px;
     overflow: hidden;
-    scroll-margin-top: 110px;
+    scroll-margin-top: 150px;
     transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
     animation: fadeUp 0.4s ease both;
   }
@@ -1000,41 +1003,43 @@
 </div>
 
 <!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <div class="logo-area">
-      <h1><img id="eventLogoImg" class="event-logo-img" src="img/logo.png" alt="BOOTcamp de aceleración de emprendimiento"><span id="eventLogoEmoji" style="display:none;">⚡ Sinergéticos</span></h1>
-      <p>Notas del evento presencial · 30 speakers</p>
+<div class="top-bar">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area">
+        <h1><img id="eventLogoImg" class="event-logo-img" src="img/logo.png" alt="BOOTcamp de aceleración de emprendimiento"><span id="eventLogoEmoji" style="display:none;">⚡ Sinergéticos</span></h1>
+        <p>Notas del evento presencial · 30 speakers</p>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Buscar en notas, speakers, ideas…" />
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-n">30</div><div class="stat-l">Speakers</div></div>
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l">Días</div></div>
+        <div class="stat"><div class="stat-n">5</div><div class="stat-l">Pilares</div></div>
+      </div>
     </div>
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="Buscar en notas, speakers, ideas…" />
-    </div>
-    <div class="stats">
-      <div class="stat"><div class="stat-n">30</div><div class="stat-l">Speakers</div></div>
-      <div class="stat"><div class="stat-n">3</div><div class="stat-l">Días</div></div>
-      <div class="stat"><div class="stat-n">5</div><div class="stat-l">Pilares</div></div>
-    </div>
-  </div>
-</header>
+  </header>
 
-<!-- TABS -->
-<div class="tabs-bar">
-  <button class="tab-btn active" onclick="showDay('d1', this)">
-    Día 1 <span class="badge">10</span>
-  </button>
-  <button class="tab-btn" onclick="showDay('d2', this)">
-    Día 2 <span class="badge">9</span>
-  </button>
-  <button class="tab-btn" onclick="showDay('d3', this)">
-    Domingo <span class="badge">11</span>
-  </button>
-  <button class="tab-btn" onclick="showDay('diagramas', this)">
-    📊 Diagramas
-  </button>
-  <button class="tab-btn" onclick="showDay('all', this)">
-    Ver todo
-  </button>
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="showDay('d1', this)">
+      Día 1 <span class="badge">10</span>
+    </button>
+    <button class="tab-btn" onclick="showDay('d2', this)">
+      Día 2 <span class="badge">9</span>
+    </button>
+    <button class="tab-btn" onclick="showDay('d3', this)">
+      Domingo <span class="badge">11</span>
+    </button>
+    <button class="tab-btn" onclick="showDay('diagramas', this)">
+      📊 Diagramas
+    </button>
+    <button class="tab-btn" onclick="showDay('all', this)">
+      Ver todo
+    </button>
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -2730,16 +2735,31 @@ flowchart TB
       darkMode: true,
       background: '#0e1611',
       primaryColor: '#16271c',
-      primaryTextColor: '#e9f5ec',
-      primaryBorderColor: '#34d058',
-      lineColor: '#6fe8a8',
+      primaryTextColor: '#ffffff',
+      primaryBorderColor: '#ffffff',
+      lineColor: '#ffffff',
       secondaryColor: '#121f17',
+      secondaryTextColor: '#ffffff',
+      secondaryBorderColor: '#cfeede',
       tertiaryColor: '#102219',
+      tertiaryTextColor: '#ffffff',
+      tertiaryBorderColor: '#cfeede',
       mainBkg: '#16271c',
-      nodeBorder: '#34d058',
+      nodeBorder: '#ffffff',
+      nodeTextColor: '#ffffff',
       clusterBkg: '#121f17',
-      clusterBorder: '#1f3a28',
-      textColor: '#e9f5ec',
+      clusterBorder: '#ffffff',
+      titleColor: '#ffffff',
+      edgeLabelBackground: '#0e1611',
+      textColor: '#ffffff',
+      pie1: '#34d058',
+      pie2: '#6fe8a8',
+      pie3: '#2bbfa0',
+      pieStrokeColor: '#ffffff',
+      pieOuterStrokeColor: '#ffffff',
+      pieSectionTextColor: '#06120a',
+      pieTitleTextColor: '#ffffff',
+      pieLegendTextColor: '#ffffff',
       fontSize: '14px',
       fontFamily: "'Segoe UI', system-ui, -apple-system, sans-serif"
     }

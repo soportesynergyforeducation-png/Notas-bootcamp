@@ -2569,9 +2569,9 @@ flowchart TB
         clone.classList.add('open');
         clone.querySelector('.card-header').onclick = function() { toggleCard(this); };
 
-        // highlight
+        // highlight (text nodes only, never touches tags/attributes)
         const body = clone.querySelector('.card-body');
-        if (body) body.innerHTML = highlight(body.innerHTML, query);
+        if (body) highlightTextNodes(body, query);
 
         resultsDiv.appendChild(clone);
         count++;
@@ -2590,9 +2590,27 @@ flowchart TB
     nav.innerHTML = `<div class="sidebar-title">${count} resultado${count !== 1 ? 's' : ''}</div>`;
   }
 
-  function highlight(html, query) {
+  function highlightTextNodes(root, query) {
     const esc = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return html.replace(new RegExp(`(${esc})`, 'gi'), '<mark class="highlight">$1</mark>');
+    const re = new RegExp(`(${esc})`, 'gi');
+
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: node => {
+        if (!node.nodeValue.toLowerCase().includes(query.toLowerCase())) return NodeFilter.FILTER_REJECT;
+        if (node.parentElement && node.parentElement.tagName === 'MARK') return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+
+    const textNodes = [];
+    let n;
+    while ((n = walker.nextNode())) textNodes.push(n);
+
+    textNodes.forEach(node => {
+      const span = document.createElement('span');
+      span.innerHTML = node.nodeValue.replace(re, '<mark class="highlight">$1</mark>');
+      node.replaceWith(...span.childNodes);
+    });
   }
 
   // ── INIT ──

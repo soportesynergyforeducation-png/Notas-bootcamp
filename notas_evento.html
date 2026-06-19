@@ -407,6 +407,28 @@
 
   .speaker-card.open .card-body { display: block; animation: fadeIn 0.35s ease both; }
 
+  .view-diagram-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(52,208,88,0.1);
+    border: 1px solid rgba(52,208,88,0.3);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+  }
+
+  .view-diagram-btn:hover {
+    background: rgba(52,208,88,0.18);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(52,208,88,0.18);
+  }
+
   /* ── NOTE CONTENT ── */
   .note-list {
     list-style: none;
@@ -889,6 +911,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-pilares')">📊 Ver diagrama</button>
           <div class="section-title">Ideas clave</div>
           <ul class="note-list">
             <li>Logística para traer 30 speakers de categoría internacional</li>
@@ -925,6 +948,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-susy')">📊 Ver diagrama</button>
           <div class="section-title">Entorno = Resultado</div>
           <ul class="note-list">
             <li>Accionar y poner en práctica todo lo que estás aprendiendo</li>
@@ -970,6 +994,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-pavo')">📊 Ver diagrama</button>
           <div class="section-title">Base mental</div>
           <ul class="note-list">
             <li>La buena suerte no existe; tú construyes tu propia suerte</li>
@@ -1041,6 +1066,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-manuel1')">📊 Ver diagrama</button>
           <div class="highlight-box">💡 La IA no viene a reemplazar personas — viene a reemplazar sus límites</div>
           <div class="section-title">4 elementos de un buen prompt</div>
           <div class="steps-list">
@@ -1086,6 +1112,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-ricardo')">📊 Ver diagrama</button>
           <div class="section-title">¿Cómo perdemos nuestro poder?</div>
           <div class="pill-list">
             <span class="pill">Nos lo roban</span>
@@ -1206,6 +1233,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-paola')">📊 Ver diagrama</button>
           <div class="quote"><strong>"Un evento es una habitación llena de futuros posibles."</strong></div>
           <div class="section-title">Los 3 niveles de conciencia</div>
           <div class="steps-list">
@@ -1233,6 +1261,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-cardona')">📊 Ver diagrama</button>
           <ul class="note-list">
             <li>Gente con mucho dinero se endeuda y termina empeñando</li>
             <li>Hay que tener negocio propio pero también ingresos pasivos (rentas, regalías)</li>
@@ -1304,6 +1333,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-anzures')">📊 Ver diagrama</button>
           <ul class="note-list">
             <li>Las creencias se rompen actuando</li>
             <li>Cámbiate de mesa y cambiará tu cabeza</li>
@@ -1342,6 +1372,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-efren')">📊 Ver diagrama</button>
           <div class="section-title">Los 3 factores que más roban sentido a la vida</div>
           <div class="steps-list">
             <div class="step">Percibir un bajo éxito laboral</div>
@@ -1374,6 +1405,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-luisfallas')">📊 Ver diagrama</button>
           <div class="steps-list">
             <div class="step">Continuar cuando la mente pide que pares</div>
             <div class="step">Primero mantenerse enfocado en que tu empresa funcione</div>
@@ -1404,6 +1436,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-daniel')">📊 Ver diagrama</button>
           <div class="section-title">Daniel Marcos — CEO</div>
           <div class="quote"><strong>"Tu empresa no puede escalar más rápido que tú."</strong></div>
           <ul class="note-list">
@@ -1457,6 +1490,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-chencho')">📊 Ver diagrama</button>
           <div class="section-title">Pilares IE</div>
           <div class="pill-list">
             <span class="pill">Autoconocimiento</span>
@@ -1511,6 +1545,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-ruben')">📊 Ver diagrama</button>
           <ul class="note-list">
             <li>Ser líder: primero te dan el título y luego estudias la carrera</li>
             <li>Liderar siempre tiene que servir a otros</li>
@@ -1555,6 +1590,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-ferleon')">📊 Ver diagrama</button>
           <ul class="note-list">
             <li>Permítete ser principiante las veces que sea necesario</li>
             <li>Todo lo que nace desde el amor florece</li>
@@ -1613,6 +1649,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-tito')">📊 Ver diagrama</button>
           <div class="quote"><strong>"No es lo mismo no tener y querer tener, que tener y no tener."</strong></div>
           <ul class="note-list">
             <li>Las historias y creencias son transferibles por ósmosis</li>
@@ -1648,6 +1685,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-ale')">📊 Ver diagrama</button>
           <div class="section-title">3 contratos invisibles que te frenan</div>
           <div class="steps-list">
             <div class="step">Si no es perfecto no lo hago — la perfección no te permite ser principiante</div>
@@ -1686,6 +1724,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-saracho')">📊 Ver diagrama</button>
           <div class="section-title">Diagnóstico financiero (¿cumples?)</div>
           <ul class="note-list">
             <li>Ganas el doble de lo que gastas</li>
@@ -1717,6 +1756,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-victor')">📊 Ver diagrama</button>
           <div class="section-title">Error #1 en redes sociales</div>
           <div class="highlight-box">❌ Hacer "contenido de valor" atrae clientes que no quieren pagar por tus servicios</div>
           <div class="section-title">Los 5 niveles de conciencia del cliente</div>
@@ -1743,6 +1783,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-manuelm')">📊 Ver diagrama</button>
           <div class="steps-list">
             <div class="step">Parálisis por análisis</div>
             <div class="step">Miedo a lo desconocido</div>
@@ -1794,6 +1835,7 @@
           <span class="card-toggle">▼</span>
         </div>
         <div class="card-body">
+          <button class="view-diagram-btn" onclick="viewDiagram('d-drroch')">📊 Ver diagrama</button>
           <div class="quote"><strong>"No persigas el dinero; despierta a la persona que es capaz de atraerlo."</strong></div>
           <div class="section-title">La escalera de frecuencias</div>
           <div class="formula-grid">
@@ -2408,11 +2450,22 @@ flowchart TB
   }
 
   // ── DIAGRAMS (lazy render so Mermaid measures visible elements) ──
-  let diagramsRendered = false;
+  let diagramsRenderPromise = null;
   function renderDiagrams() {
-    if (diagramsRendered) return;
-    diagramsRendered = true;
-    mermaid.run({ querySelector: '#section-diagramas .mermaid' }).then(setupDiagramZoom);
+    if (!diagramsRenderPromise) {
+      diagramsRenderPromise = mermaid.run({ querySelector: '#section-diagramas .mermaid' }).then(setupDiagramZoom);
+    }
+    return diagramsRenderPromise;
+  }
+
+  // ── JUMP FROM A SPEAKER'S NOTES TO THEIR DIAGRAM ──
+  function viewDiagram(diagramId) {
+    const tabBtn = document.querySelector('.tab-btn[onclick*="\'diagramas\'"]');
+    showDay('diagramas', tabBtn);
+    renderDiagrams().then(() => {
+      const el = document.getElementById(diagramId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 
   // ── DIAGRAM ZOOM MODAL ──

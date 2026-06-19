@@ -336,9 +336,9 @@
   }
 
   .avatar {
-    width: 46px;
-    height: 46px;
-    border-radius: 12px;
+    width: 52px;
+    height: 72px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -354,6 +354,19 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: zoom-in;
+    transition: transform 0.2s, filter 0.2s;
+  }
+
+  .avatar img:hover {
+    transform: scale(1.06);
+    filter: brightness(1.08);
+  }
+
+  .avatar-group {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
   }
 
   .card-meta { flex: 1; min-width: 0; }
@@ -755,6 +768,34 @@
     color: var(--accent);
   }
 
+  /* ── PHOTO ZOOM MODAL (reuses diagram-modal look) ── */
+  .photo-modal-inner {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    padding: 60px;
+  }
+
+  .photo-modal-inner img {
+    max-width: 100%;
+    max-height: calc(100% - 50px);
+    object-fit: contain;
+    border-radius: 12px;
+    filter: drop-shadow(0 0 16px rgba(52,208,88,0.18));
+    animation: fadeIn 0.25s ease both;
+  }
+
+  .photo-modal-caption {
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
   /* ── ADMIN PANEL (Firebase uploads) ── */
   .admin-fab {
     position: fixed;
@@ -910,6 +951,15 @@
   <div class="diagram-modal-inner" id="diagramModalInner"></div>
 </div>
 
+<!-- PHOTO ZOOM MODAL -->
+<div class="diagram-modal" id="photoModal" onclick="if(event.target===this) closePhotoModal()">
+  <button class="diagram-modal-close" onclick="closePhotoModal()">✕</button>
+  <div class="photo-modal-inner">
+    <img id="photoModalImg" src="" alt="">
+    <div class="photo-modal-caption" id="photoModalCaption"></div>
+  </div>
+</div>
+
 <!-- ADMIN: LOGIN + UPLOADS (Firebase Storage) -->
 <button class="admin-fab" id="adminFab" title="Admin">🔐</button>
 
@@ -1010,7 +1060,7 @@
       <!-- Jorge Serratos 1 -->
       <div class="speaker-card open" id="card-jorge1" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/jorge1.jpg" alt="JS"></div>
+          <div class="avatar"><img src="img/avatars/jorge1.jpg" alt="JS" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Jorge Serratos</h3>
             <div class="topic">Apertura · Ecosistemas · Capital Social</div>
@@ -1046,7 +1096,7 @@
       <!-- Susy Bereken -->
       <div class="speaker-card" id="card-susy" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/susy.jpg" alt="SB"></div>
+          <div class="avatar"><img src="img/avatars/susy.jpg" alt="SB" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Susy Bereken</h3>
             <div class="topic">Entorno · Liderazgo · Influencia</div>
@@ -1091,7 +1141,7 @@
       <!-- Pavo Gómez -->
       <div class="speaker-card" id="card-pavo" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/pavo.jpg" alt="PG"></div>
+          <div class="avatar"><img src="img/avatars/pavo.jpg" alt="PG" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Pavo Gómez</h3>
             <div class="topic">Superproductividad · Hábitos · Enfoque</div>
@@ -1162,7 +1212,7 @@
       <!-- Manuel de León 1 -->
       <div class="speaker-card" id="card-manuel1" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/manuel1.jpeg" alt="ML"></div>
+          <div class="avatar"><img src="img/avatars/manuel1.jpeg" alt="ML" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Manuel de León</h3>
             <div class="topic">Una vida legendaria con IA · Prompts · Hacks</div>
@@ -1207,7 +1257,7 @@
       <!-- Ricardo Perret -->
       <div class="speaker-card" id="card-ricardo" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/ricardo.jpg" alt="RP"></div>
+          <div class="avatar"><img src="img/avatars/ricardo.jpg" alt="RP" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Ricardo Perret</h3>
             <div class="topic">Recupera tu poder · Inconsciente · Creencias</div>
@@ -1243,7 +1293,7 @@
       <!-- Alfredo Mota -->
       <div class="speaker-card" id="card-alfredo" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/alfredo.jpg" alt="AM"></div>
+          <div class="avatar"><img src="img/avatars/alfredo.jpg" alt="AM" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Alfredo Mota</h3>
             <div class="topic">Infoproductos · Webinars · E-commerce</div>
@@ -1273,7 +1323,7 @@
       <!-- Laura Baes -->
       <div class="speaker-card" id="card-laura" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/laura.jpg" alt="LB"></div>
+          <div class="avatar"><img src="img/avatars/laura.jpg" alt="LB" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Laura Baes</h3>
             <div class="topic">Propósito · Neuroplasticidad · Mentalidad</div>
@@ -1293,7 +1343,7 @@
       <!-- Memo Serrano -->
       <div class="speaker-card" id="card-memo" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/memo.jpg" alt="MS"></div>
+          <div class="avatar"><img src="img/avatars/memo.jpg" alt="MS" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Memo Serrano</h3>
             <div class="topic">Identidad · Mentalidad · Incomodidad</div>
@@ -1327,7 +1377,7 @@
       <!-- Paola Padilla -->
       <div class="speaker-card" id="card-paola" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/paola.jpg" alt="PP"></div>
+          <div class="avatar"><img src="img/avatars/paola.jpg" alt="PP" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Paola Padilla</h3>
             <div class="topic">Eventos como portales · Conciencia · Ecosistemas</div>
@@ -1354,7 +1404,7 @@
       <!-- Alejandro Cardona -->
       <div class="speaker-card" id="card-cardona" data-day="d1">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/cardona.jpg" alt="AC"></div>
+          <div class="avatar"><img src="img/avatars/cardona.jpg" alt="AC" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Alejandro Cardona</h3>
             <div class="topic">Finanzas · Libertad financiera · Inversión</div>
@@ -1395,7 +1445,7 @@
       <!-- Claudia Lizaldi -->
       <div class="speaker-card" id="card-claudia" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/claudia.jpg" alt="CL"></div>
+          <div class="avatar"><img src="img/avatars/claudia.jpg" alt="CL" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Claudia Lizaldi</h3>
             <div class="topic">Amor propio · Creencias · Despertar</div>
@@ -1425,7 +1475,7 @@
       <!-- Fernando Anzures -->
       <div class="speaker-card" id="card-fer-anzures" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/fer-anzures.jpg" alt="FA"></div>
+          <div class="avatar"><img src="img/avatars/fer-anzures.jpg" alt="FA" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Fernando Anzures</h3>
             <div class="topic">Marca Personal · Visibilidad · Networking estratégico</div>
@@ -1463,7 +1513,7 @@
       <!-- Efrén Martínez -->
       <div class="speaker-card" id="card-efren" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/efren.jpg" alt="EM"></div>
+          <div class="avatar"><img src="img/avatars/efren.jpg" alt="EM" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Efrén Martínez</h3>
             <div class="topic">Sentido del trabajo · Propósito · Satisfacción</div>
@@ -1495,7 +1545,7 @@
       <!-- Luis Fallas -->
       <div class="speaker-card" id="card-luis" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/luis.jpg" alt="LF"></div>
+          <div class="avatar"><img src="img/avatars/luis.jpg" alt="LF" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Luis Fallas</h3>
             <div class="topic">10 herramientas para el éxito</div>
@@ -1522,7 +1572,10 @@
       <!-- Regina Carrot / Daniel Marcos -->
       <div class="speaker-card" id="card-daniel" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/daniel.jpg" alt="DM"></div>
+          <div class="avatar-group">
+            <div class="avatar"><img src="img/avatars/daniel.jpg" alt="Daniel Marcos" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
+            <div class="avatar"><img src="img/avatars/regina.jpg" alt="Regina Carrot" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
+          </div>
           <div class="card-meta">
             <h3>Daniel Marcos + Regina Carrot</h3>
             <div class="topic">CEOs · Comunicación magnética · Storytelling</div>
@@ -1554,7 +1607,7 @@
       <!-- Salvador Alba -->
       <div class="speaker-card" id="card-salvador" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/salvador.jpg" alt="SA"></div>
+          <div class="avatar"><img src="img/avatars/salvador.jpg" alt="SA" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Salvador Alba</h3>
             <div class="topic">Ser vs Tener · Autenticidad · Propósito</div>
@@ -1575,7 +1628,7 @@
       <!-- Chencho García -->
       <div class="speaker-card" id="card-chencho" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/chencho.jpg" alt="CG"></div>
+          <div class="avatar"><img src="img/avatars/chencho.jpg" alt="CG" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Chencho García</h3>
             <div class="topic">Inteligencia emocional · Equipos · Liderazgo</div>
@@ -1604,7 +1657,7 @@
       <!-- Milena Sandoval -->
       <div class="speaker-card" id="card-milena" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/milena.jpg" alt="MSa"></div>
+          <div class="avatar"><img src="img/avatars/milena.jpg" alt="MSa" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Milena Sandoval</h3>
             <div class="topic">Comunicación empresarial · Errores</div>
@@ -1629,7 +1682,7 @@
       <!-- Rubén Duke -->
       <div class="speaker-card" id="card-ruben" data-day="d2">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/ruben.jpg" alt="RD"></div>
+          <div class="avatar"><img src="img/avatars/ruben.jpg" alt="RD" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Rubén Duke</h3>
             <div class="topic">Liderazgo intangible · Equipos · Casa vs Hogar</div>
@@ -1673,7 +1726,7 @@
       <!-- Fer León -->
       <div class="speaker-card" id="card-fer-leon" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/fer-leon.jpg" alt="FL"></div>
+          <div class="avatar"><img src="img/avatars/fer-leon.jpg" alt="FL" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Fer León</h3>
             <div class="topic">Pilares del liderazgo · Método FER</div>
@@ -1709,7 +1762,7 @@
       <!-- Coral Muajes -->
       <div class="speaker-card" id="card-coral" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/coral.jpg" alt="CM"></div>
+          <div class="avatar"><img src="img/avatars/coral.jpg" alt="CM" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Coral Muajes</h3>
             <div class="topic">Marketing · Resultados · Simplificar el juego</div>
@@ -1731,7 +1784,7 @@
       <!-- Tito Luzardo -->
       <div class="speaker-card" id="card-tito" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/tito.jpg" alt="TL"></div>
+          <div class="avatar"><img src="img/avatars/tito.jpg" alt="TL" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Tito Luzardo</h3>
             <div class="topic">Identidad · Historia · Transformación</div>
@@ -1766,7 +1819,7 @@
       <!-- Ale Tejeda -->
       <div class="speaker-card" id="card-ale" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/ale.jpg" alt="AT"></div>
+          <div class="avatar"><img src="img/avatars/ale.jpg" alt="AT" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Ale Tejeda</h3>
             <div class="topic">Autosabotaje · Imparable · Contratos invisibles</div>
@@ -1804,7 +1857,7 @@
       <!-- Alejandro Saracho -->
       <div class="speaker-card" id="card-saracho" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/saracho.jpg" alt="AS"></div>
+          <div class="avatar"><img src="img/avatars/saracho.jpg" alt="AS" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Alejandro Saracho</h3>
             <div class="topic">Reconfiguración financiera · Libertad financiera</div>
@@ -1835,7 +1888,7 @@
       <!-- Víctor Heras -->
       <div class="speaker-card" id="card-victor" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/victor.jpg" alt="VH"></div>
+          <div class="avatar"><img src="img/avatars/victor.jpg" alt="VH" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Víctor Heras</h3>
             <div class="topic">Redes sociales · Contenido · Niveles de conciencia</div>
@@ -1861,7 +1914,7 @@
       <!-- Manuel "10 Monstruos" -->
       <div class="speaker-card" id="card-manuel-monstruos" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/manuel-monstruos.jpeg" alt="ML"></div>
+          <div class="avatar"><img src="img/avatars/manuel-monstruos.jpeg" alt="ML" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Manuel de León — 10 Monstruos</h3>
             <div class="topic">Barreras internas y externas para transformar tu vida</div>
@@ -1887,7 +1940,7 @@
       <!-- Spencer Hoffman -->
       <div class="speaker-card" id="card-spencer" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/spencer.jpg" alt="SH"></div>
+          <div class="avatar"><img src="img/avatars/spencer.jpg" alt="SH" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Spencer Hoffman</h3>
             <div class="topic">Resiliencia · Mentalidad · Regla de los 5 años</div>
@@ -1912,7 +1965,7 @@
       <!-- Dr. Roch -->
       <div class="speaker-card" id="card-drroch" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/drroch.jpg" alt="DR"></div>
+          <div class="avatar"><img src="img/avatars/drroch.jpg" alt="DR" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Dr. Roch</h3>
             <div class="topic">Frecuencia del dinero · TIMO · Espiritualidad financiera</div>
@@ -1947,7 +2000,7 @@
       <!-- Brando Angulo -->
       <div class="speaker-card" id="card-brando" data-day="d3">
         <div class="card-header" onclick="toggleCard(this)">
-          <div class="avatar"><img src="img/avatars/brando.jpg" alt="BA"></div>
+          <div class="avatar"><img src="img/avatars/brando.jpg" alt="BA" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)"></div>
           <div class="card-meta">
             <h3>Brando Angulo</h3>
             <div class="topic">Inversión inmobiliaria · Resiliencia · Reinversión</div>
@@ -2559,8 +2612,19 @@ flowchart TB
     document.getElementById('diagramModal').classList.remove('open');
   }
 
+  // ── PHOTO ZOOM MODAL ──
+  function openPhotoModal(src, caption) {
+    document.getElementById('photoModalImg').src = src;
+    document.getElementById('photoModalCaption').textContent = caption || '';
+    document.getElementById('photoModal').classList.add('open');
+  }
+
+  function closePhotoModal() {
+    document.getElementById('photoModal').classList.remove('open');
+  }
+
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeDiagramModal();
+    if (e.key === 'Escape') { closeDiagramModal(); closePhotoModal(); }
   });
 
   // ── SIDEBAR NAV ──
@@ -2721,7 +2785,8 @@ flowchart TB
 
   function setAvatarImage(card, url) {
     const avatar = card.querySelector('.avatar');
-    avatar.innerHTML = `<img src="${url}" alt="">`;
+    const name = card.querySelector('h3')?.textContent || '';
+    avatar.innerHTML = `<img src="${url}" alt="${name}" onclick="event.stopPropagation(); openPhotoModal(this.src, this.alt)">`;
   }
 
   async function loadAvatars() {

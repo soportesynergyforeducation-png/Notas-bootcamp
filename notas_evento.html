@@ -2190,7 +2190,16 @@ flowchart TB
     }
 
     buildNav(day);
+    if (day === 'diagramas' || day === 'all') renderDiagrams();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── DIAGRAMS (lazy render so Mermaid measures visible elements) ──
+  let diagramsRendered = false;
+  function renderDiagrams() {
+    if (diagramsRendered) return;
+    diagramsRendered = true;
+    mermaid.run({ querySelector: '#section-diagramas .mermaid' });
   }
 
   // ── SIDEBAR NAV ──
@@ -2289,7 +2298,7 @@ flowchart TB
 
   // ── INIT ──
   buildNav('d1');
-  mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+  mermaid.initialize({ startOnLoad: false, theme: 'dark' });
 </script>
 </body>
 </html>
